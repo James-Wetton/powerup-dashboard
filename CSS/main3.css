@@ -1,0 +1,30 @@
+.TB{
+    border:solid black;
+    padding:5%;
+}
+.TBR{
+    border:solid black;
+    padding:1.5%;
+    margin-left:5%;
+    margin-right:5%;
+}
+.BR{
+    border:solid black;
+    margin-top:0.1%;
+    padding-bottom:47%;
+}
+.Camera{
+    padding-bottom:47%;
+    margin-top:15%;
+    padding-left:30%;
+    padding-right:30%;
+    border:solid black;
+}
+.BBR{
+    border:solid black;
+    padding-left:5%;
+    padding-right:5%;
+    padding-top:0.1%;
+    padding-bottom:0.1%; 
+    margin-left:64.5%;   
+}
