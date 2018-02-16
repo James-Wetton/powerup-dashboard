@@ -1,24 +1,6 @@
 var currentGyro = 0;
 var offsetGyro = 0;
-
-$(document).ready(function() {
-    $("#mainform").submit(function(e) {
-        e.preventDefault();
-        remove_form();
-    });
-
-    // sets a function that will be called  when the robot connects/disconnects
-    NetworkTables.addRobotConnectionListener(onRobotConnection, true);
-
-
-    // sets a function that will be called when any NetworkTables key/value changes
-    NetworkTables.addGlobalListener(onValueChanged, true);
-
-    // hook up our SendableChoosers to combo boxes
-    attachSelectToSendableChooser("#auto-selector", "/SmartDashboard/Autonomous Mode");
-
-});
-
+var TimerCounter = true;
 function resetGyro() {
 
     offsetGyro = currentGyro;
@@ -82,25 +64,31 @@ function remove_form() {
 }
 
 function timerCycle() {
-    var countDownDate = Math.floor(Date.now() / 1000) + 135;
-    setInterval(function() {
-        var now = Math.floor(Date.now() / 1000);
-        var difference = countDownDate - now;
+    if(TimerCounter === true){
+        TimerCounter = false
+        var countDownDate = Math.floor(Date.now() / 1000) + 135;
+        setInterval(function() {
+            var now = Math.floor(Date.now() / 1000);
+            var difference = countDownDate - now;
 
-        if (difference <= 0) {
-            document.getElementById("timer").innerHTML = "";
-            $("#timer").text("GOOD JOB!");
-            $("#timer").css("font-size", "425%");
-            $("#timer").css("color", "#4CAF50");
-            $("#timer").toggleClass("blink");
-        } else if (difference < 10) {
-            document.getElementById("timer").innerHTML = "00" + difference;
-        } else if (difference < 100) {
-            document.getElementById("timer").innerHTML = "0" + difference;
-        } else {
-            document.getElementById("timer").innerHTML = difference;
-        }
-    }, 1000);
+            if (difference <= 0) {
+                document.getElementById("timer").innerHTML = "";
+                $("#timer").text("GOOD JOB!");
+                $("#timer").css("font-size", "425%");
+                $("#timer").css("color", "#4CAF50");
+                $("#timer").toggleClass("blink");
+            } else if (difference < 10) {
+                document.getElementById("timer").innerHTML = "00" + difference;
+            } else if (difference < 100) {
+                document.getElementById("timer").innerHTML = "0" + difference;
+            } else {
+                document.getElementById("timer").innerHTML = difference;
+            }
+        }, 1000);
+    }
+    else{
+        null
+    }
 }
 function timerReset(){
     $('#timer').text('135');
