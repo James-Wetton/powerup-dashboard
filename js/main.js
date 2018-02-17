@@ -4,12 +4,9 @@ var TimerCounter = null;
 var IntervalTimer;
 var timerFrom = 135;
 var timerCounter = true;
+var checkboxCounter = 0;
+var checkboxGone = false;
 $(document).ready(function() {
-    $("#mainform").submit(function(e) {
-        e.preventDefault();
-        remove_form();
-    });
-
     // sets a function that will be called  when the robot connects/disconnects
     NetworkTables.addRobotConnectionListener(onRobotConnection, true);
 
@@ -100,12 +97,25 @@ function onRobotConnection(connected) {
     }
 }
 
-function remove_form() {
-    $(".checklist").hide();
-    $(".hidden").show();
-    $(".hiddengyro").show();
+function remove_form(){
+    var checkbox1 = document.getElementById("checkbox1").checked;
+    var checkbox2 = document.getElementById("checkbox2").checked;
+    var checkbox3 = document.getElementById("checkbox3").checked;
+    var checkbox4 = document.getElementById("checkbox4").checked;
+    var checkbox5 = document.getElementById("checkbox5").checked;
+    var checkbox6 = document.getElementById("checkbox6").checked;
+    var checkbox7 = document.getElementById("checkbox7").checked;
+    var checkbox8 = document.getElementById("checkbox8").checked;
+    if(checkbox1 === true && checkbox2 === true &&  checkbox3 === true && checkbox4 === true && checkbox5 === true && checkbox6 === true && checkbox7 === true && checkbox8 === true){
+        $(".checklist").hide();
+        $(".hidden").show();
+        $(".hiddengyro").show();
+        checkboxGone =true;
+    }
+    else{
+        null;
+    }
 }
-
 function rotateCompass(heading) {
     heading = heading - offsetGyro;
     heading = Math.PI - heading; // gyro is the wrong way around
