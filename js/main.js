@@ -29,8 +29,13 @@ function startTimer(){
 }
 function timer(){
     if(timerCounter){
-        timerFrom = timerFrom - 1;
-        document.getElementById("timer").innerHTML = timerFrom;
+        if(TimerFrom <=0){
+            timerFrom = timerFrom - 1;
+            document.getElementById("timer").innerHTML = timerFrom;
+        }
+        else{
+            document.getElementByID("timer").innerHTML = Finished;
+        }
     }
 }
 function resetTimer(){
