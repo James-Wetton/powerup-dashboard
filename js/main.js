@@ -29,12 +29,12 @@ function startTimer(){
 }
 function timer(){
     if(timerCounter){
-        if(TimerFrom <=0){
+        if(timerFrom >= 1 ){
             timerFrom = timerFrom - 1;
             document.getElementById("timer").innerHTML = timerFrom;
         }
         else{
-            document.getElementByID("timer").innerHTML = Finished;
+            document.getElementByID("timer").innerHTML = "Finished";
         }
     }
 }
@@ -45,7 +45,6 @@ function resetTimer(){
     document.getElementById("timer").innerHTML = 135;
 }
 function resetGyro() {
-
     offsetGyro = currentGyro;
     rotateCompass(currentGyro + Math.PI);
 }
