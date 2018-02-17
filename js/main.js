@@ -4,6 +4,23 @@ var TimerCounter = null;
 var IntervalTimer;
 var timerFrom = 135;
 var timerCounter = true;
+$(document).ready(function() {
+    $("#mainform").submit(function(e) {
+        e.preventDefault();
+        remove_form();
+    });
+
+    // sets a function that will be called  when the robot connects/disconnects
+    NetworkTables.addRobotConnectionListener(onRobotConnection, true);
+
+
+    // sets a function that will be called when any NetworkTables key/value changes
+    NetworkTables.addGlobalListener(onValueChanged, true);
+
+    // hook up our SendableChoosers to combo boxes
+    attachSelectToSendableChooser("#auto-selector", "/SmartDashboard/Autonomous Mode");
+
+});
 
 function startTimer(){
     if(IntervalTimer == null){
@@ -42,11 +59,13 @@ function onValueChanged(key, value) {
             rotateCompass(value + Math.PI);
             break;
         case "/robot/mode":
-            if (value === "teleop") {
+            if (value === "teleop"){
                 startTimer();
+                break;
             }
-            if (value != "disabled") {
-                timerReset();
+            if (value === "disabled") {
+                resetTimer();
+                break;
             }
             break;
         case "/lifter/state":
