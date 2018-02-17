@@ -1,12 +1,32 @@
 var currentGyro = 0;
 var offsetGyro = 0;
-var TimerCounter = true;
+var TimerCounter = null;
+var IntervalTimer;
+var timerFrom = 135;
+var timerCounter = true;
+
+function startTimer(){
+    if(IntervalTimer == null){
+        IntervalTimer = setInterval(timer, 1000)
+    }
+}
+function timer(){
+    if(timerCounter){
+        timerFrom = timerFrom - 1;
+        document.getElementById("timer").innerHTML = timerFrom;
+    }
+}
+function resetTimer(){
+    clearInterval(IntervalTimer);
+    timerFrom = 135;
+    IntervalTimer = null;
+    document.getElementById("timer").innerHTML = 135;
+}
 function resetGyro() {
 
     offsetGyro = currentGyro;
     rotateCompass(currentGyro + Math.PI);
 }
-
 
 function updateLifterStatus(id) {
     $("#l1").attr("class", "hidden-status");
@@ -23,7 +43,7 @@ function onValueChanged(key, value) {
             break;
         case "/robot/mode":
             if (value === "teleop") {
-                timerCycle();
+                startTimer();
             }
             if (value != "disabled") {
                 timerReset();
@@ -63,36 +83,6 @@ function remove_form() {
     $(".hiddengyro").show();
 }
 
-function timerCycle() {
-    if(TimerCounter === true){
-        TimerCounter = false
-        var countDownDate = Math.floor(Date.now() / 1000) + 135;
-        setInterval(function() {
-            var now = Math.floor(Date.now() / 1000);
-            var difference = countDownDate - now;
-
-            if (difference <= 0) {
-                document.getElementById("timer").innerHTML = "";
-                $("#timer").text("GOOD JOB!");
-                $("#timer").css("font-size", "425%");
-                $("#timer").css("color", "#4CAF50");
-                $("#timer").toggleClass("blink");
-            } else if (difference < 10) {
-                document.getElementById("timer").innerHTML = "00" + difference;
-            } else if (difference < 100) {
-                document.getElementById("timer").innerHTML = "0" + difference;
-            } else {
-                document.getElementById("timer").innerHTML = difference;
-            }
-        }, 1000);
-    }
-    else{
-        null
-    }
-}
-function timerReset(){
-    $('#timer').text('135');
-}
 function rotateCompass(heading) {
     heading = heading - offsetGyro;
     heading = Math.PI - heading; // gyro is the wrong way around
